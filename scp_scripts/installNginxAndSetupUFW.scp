@@ -1,0 +1,18 @@
+#!/bin/bash
+#This script is intended to be run as root on the remote reverse proxy coupled with the Amok unit.
+
+trustedIP=$1
+
+apt -y install nginx
+apt -y install ufw
+apt -y install software-properties-common
+add-apt-repository -y universe
+add-apt-repository -y ppa:certbot/certbot
+apt -y update
+apt-get -y install certbot python-certbot-nginx
+
+yes | ufw allow from $trustedIP to any port 22
+yes | ufw allow 'Nginx HTTP'
+yes | ufw allow 'Nginx HTTPS'
+yes | ufw allow from any to any port 8448
+yes | ufw enable
