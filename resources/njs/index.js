@@ -1,4 +1,5 @@
-const https = require('https');
+onst https = require('https');
+const httpProxy = require('http-proxy')
 const fs = require('fs');
 const keyLocation = '/etc/letsencrypt/live/flawlesscougarbuffet.tk/privkey.pem';
 const certLocation = '/etc/letsencrypt/live/flawlesscougarbuffet.tk/fullchain.pem';
@@ -20,46 +21,62 @@ let generateIP = function(){
   return (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255) + 0)+"."+(Math.floor(Math.random() * 255) + 0)+"."+(Math.floor(Math.random() * 255) + 0);
 }
 
+let proxy = httpProxy.createProxyServer({ ssl : {key : fs.readFileSync(keyLocation, 'utf8'), cert : fs.readFileSync(certLocation, 'utf8')}
+, target : `https://${amokUnitAddr}`, secure : true })
+
+proxy.on('error', function(err){
+  console.log(err);
+})
+
+proxy.on('proxyReq', function(proxyReq){
+  console.log(proxyReq);
+})
+
 let server = https.createServer(options, (req, res) => {
   let origin = req.headers["X-Forwarded-For"];
   let targetCol = db.collection(originAliasCol);
   let dataString
 
-  req.on('data', function(data){
-    dataString += data;
-  })
+  targetCol.findOne({"origin" : origin})
+    .then(function(findOneReturn){
+      let alias;
 
-  req.on('end', function(data){
-    targetCol.findOne({"origin" : origin})
-      .then(function(findOneReturn){
-        let alias;
-
-        if(!findOneReturn){
-          alias = generateIP();
-          return targetCol.insertOne({"origin" : origin, "alias" : alias});
-        }
+      if(!findOneReturn){
+        alias = generateIP();
+        return targetCol.insertOne({"origin" : origin, "alias" : alias});
+      }
         return findOneReturn;
       })
       .then(function(originAliasDoc){
-        let origin = originAliasDoc.result.origin;
-        let alias = originAliasDoc.result.alias;
-        req.headers["X-Forwarded-For"] = alias;
+        let origin = originAliasDoc.origin;
+        let alias = originAliasDoc.alias;
+        req.headers["x-forwarded-for"] = [alias];
+        req.headers["host"] = 'flawlesscougarbuffet.tk'
 
-        let amokReq = https.request(amokUnitAddr, { headers : req.headers, method : req.method, port : '443'}, (amokRes) => {
-          amokRes.on('data', function(data){
-            res.write(data);
-          })
-          amokRes.on('end', function(){
-            res.end();
-          })
-        })
-        amokReq.write(data);
-        amokReq.end();
+        proxy.web(req, res);
       })
     })
-}
 
-mongoClient.connect().then(function(err, connectedClient){
+mongoClient.connect().then(function(connectedClient){
     db = connectedClient.db(dbName);
     server.listen(port);
 });
+
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+
