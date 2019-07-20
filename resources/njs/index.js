@@ -1,4 +1,4 @@
-onst https = require('https');
+const https = require('https');
 const httpProxy = require('http-proxy')
 const fs = require('fs');
 const keyLocation = '/etc/letsencrypt/live/flawlesscougarbuffet.tk/privkey.pem';
@@ -28,15 +28,12 @@ proxy.on('error', function(err){
   console.log(err);
 })
 
-proxy.on('proxyReq', function(proxyReq){
-  console.log(proxyReq);
-})
 
 let server = https.createServer(options, (req, res) => {
-  let origin = req.headers["X-Forwarded-For"];
+  let origin = req.headers["x-forwarded-for"];
   let targetCol = db.collection(originAliasCol);
   let dataString
-
+	console.log(origin);
   targetCol.findOne({"origin" : origin})
     .then(function(findOneReturn){
       let alias;
@@ -50,9 +47,9 @@ let server = https.createServer(options, (req, res) => {
       .then(function(originAliasDoc){
         let origin = originAliasDoc.origin;
         let alias = originAliasDoc.alias;
-        req.headers["x-forwarded-for"] = [alias];
+        req.headers["x-forwarded-for"] = alias;
+	req.headers["x-real-ip"] = alias;
         req.headers["host"] = 'flawlesscougarbuffet.tk'
-
         proxy.web(req, res);
       })
     })
@@ -61,22 +58,3 @@ mongoClient.connect().then(function(connectedClient){
     db = connectedClient.db(dbName);
     server.listen(port);
 });
-
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-
