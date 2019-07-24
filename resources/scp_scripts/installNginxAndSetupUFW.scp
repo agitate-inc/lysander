@@ -1,5 +1,5 @@
 #!/bin/bash
-#This script is intended to be run as root on the remote reverse proxy coupled with the Amok unit.
+#This script is intended to be run as root on the remote reverse proxy coupled with the Amok unit. It is only ever to be accessed and executed by initAndConfigureRemotNginxUFW.sh.
 apt -y install nginx
 apt -y install ufw
 apt -y install software-properties-common
@@ -7,7 +7,7 @@ add-apt-repository -y universe
 add-apt-repository -y ppa:certbot/certbot
 apt -y update
 apt-get -y install certbot python-certbot-nginx
- 
+
 yes | ufw allow 'ssh'
 yes | ufw allow 'Nginx HTTP'
 yes | ufw allow 'Nginx HTTPS'

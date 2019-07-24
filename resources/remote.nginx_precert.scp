@@ -1,0 +1,7 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    ## Line 6 is variable
+    server_name example.com www.example.com;
+}
