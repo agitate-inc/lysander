@@ -23,13 +23,13 @@ http {
 ##Line 25 and 26 are variable
 
 ssl_certificate /etc/letsencrypt/live/flawlesscougarbuffet.tk/fullchain.pem;
-ssl_certificate /etc/letsencrypt/live/flawlesscougarbuffet.tk/privkey.pem;
+ssl_certificate_key /etc/letsencrypt/live/flawlesscougarbuffet.tk/privkey.pem;
 
 server {
   listen 443 ssl;
 		location / {
 			##Line 32 is variable
-			proxy_pass https://35.184.67.220;
+proxy_pass https://35.184.67.220:443;
     	proxy_set_header X-Forwarded-For $remote_addr;
   	}
 }
@@ -38,19 +38,15 @@ server {
 		listen 8448 ssl;
   	location / {
 		##Line 41 is variable
-		proxy_pass https://35.184.67.220;
-    		proxy_set_header X-Forwarded-For $remote_addr;
+proxy_pass https://35.184.67.220:443;
+    proxy_set_header X-Forwarded-For $remote_addr;
   		}
 		}
-
-	server {
-		listen 80;
-	}
-		}
-	}
 
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	root /var/www/html;
+}
+
 }
