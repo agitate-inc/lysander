@@ -25,6 +25,6 @@ echo "$remoteKeyTrusted" >> ~/.ssh/known_hosts
 
 yes | ssh-keygen -t rsa -f ~/.ssh/rmroot_rsa -N ''
 sshpass -f ~/.ssh/remoteRootPassword.txt ssh-copy-id -i ~/.ssh/rmroot_rsa.pub root@"$remoteIP"
-ssh -i ~/.ssh/rmroot_rsa root@"$remoteIP" "sed -i '61s/.*/ChallengeResponseAuthentication no/' \
-/etc/ssh/sshd_config; sed -i '56s/.*/PasswordAuthentication no/' /etc/ssh/sshd_config; \
-service sshd restart"
+##ssh -i ~/.ssh/rmroot_rsa root@"$remoteIP" "sed -i '61s/.*/ChallengeResponseAuthentication no/' \
+#/etc/ssh/sshd_config; sed -i '56s/.*/PasswordAuthentication no/' /etc/ssh/sshd_config; \
+#service sshd restart"
