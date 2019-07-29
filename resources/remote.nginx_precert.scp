@@ -13,6 +13,6 @@ http {
     listen [::]:80 default_server;
     root /var/www/html;
     ## Line 16 is variable
-    server_name flawlesscougarbuffet.tk;
+server_name flawlesscougarbuffet.tk;
     }
 }

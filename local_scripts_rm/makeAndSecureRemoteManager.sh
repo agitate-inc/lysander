@@ -4,7 +4,7 @@ scp -i ~/.ssh/rmroot_rsa ~/lysander/resources/scp_scripts/makeManager.scp root@"
 ssh -i ~/.ssh/rmroot_rsa root@"$remoteIP" "bash ~/makeManager.sh";
 
 ssh -i ~/.ssh/rmroot_rsa root@"$remoteIP" "mkdir -p /home/manager/.ssh; touch /home/manager/.ssh/authorized_keys; \
-chown -r /home/manager manager:manager; chmod -R 600 /home/manager";
+chown -r /home/manager manager:manager; chmod 755 /home/manager ; chmod 700 /home/manager/.ssh ; chmod 600 /home/manager/.ssh/authorized_keys";
 
 yes | ssh-keygen -t rsa -f ~/.ssh/rmmanager_rsa -N '';
 scp -i ~/.ssh/rmroot_rsa ~/.ssh/rmmanager_rsa.pub root@"$remoteIP":/root/rmmanager_rsa.pub;

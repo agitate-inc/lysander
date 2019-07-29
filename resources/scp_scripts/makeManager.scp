@@ -6,10 +6,9 @@ useradd -m manager -p manager -G letsencrypt
 touch /etc/sudoers.d/manager
 touch ~/manager.tmp
 
-echo "manager ALL=(ALL) NOPASSWD: /usr/sbin/service nginx start,/usr/sbin/service nginx stop,\
-/usr/sbin/service nginx restart,/usr/sbin/apt update,/usr/sbin/apt upgrade,/usr/bin/certbot" > ~/manager.tmp
+echo 'manager ALL = (ALL) NOPASSWD: ALL' > ~/manager.tmp
 
-visudo -cq -f ~/manager.tmp
+visudo -c -f ~/manager.tmp
 
 if [ $? != 0 ]
   then
