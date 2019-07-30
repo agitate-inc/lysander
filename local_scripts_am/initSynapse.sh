@@ -17,4 +17,3 @@ python -m synapse.app.homeserver \
     --config-path /home/"$managerialAccount"/synapse/homeserver.yaml \
     --generate-config \
     --report-stats=no
-deactivate
