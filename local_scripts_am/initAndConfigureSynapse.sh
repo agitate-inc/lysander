@@ -13,6 +13,6 @@ pip install --upgrade setuptools
 pip install matrix-synapse
 python -m synapse.app.homeserver \
     --server-name "$siteName" \
-    --config-path homeserver.yaml \
+    --config-path ~/synapse/homeserver.yaml \
     --generate-config \
     --report-stats=no
