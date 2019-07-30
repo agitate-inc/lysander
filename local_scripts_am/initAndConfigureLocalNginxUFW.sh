@@ -1,3 +1,4 @@
+sudo apt -y update
 sudo apt -y install nginx
 sudo apt -y install ufw
 cp ~/lysander/resources/local.nginx.conf /etc/nginx/nginx.conf
