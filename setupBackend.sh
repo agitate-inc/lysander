@@ -1,3 +1,6 @@
+apt -y update;
+apt install -y sshpass;
+
 remoteFingerprintTrusted=$1
 remoteIP=$2
 remoteRootPassword=$3

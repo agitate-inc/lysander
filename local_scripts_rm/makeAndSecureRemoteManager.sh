@@ -1,3 +1,5 @@
+##TESTING : REMOTE ROOT NOT CLOSED
+
 remoteIP=$1
 
 scp -i ~/.ssh/rmroot_rsa ~/lysander/resources/scp_scripts/makeManager.scp root@"$remoteIP":/root/makeManager.sh;
