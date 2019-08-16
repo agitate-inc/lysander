@@ -1,5 +1,7 @@
 #!/bin/bash
 #Will only run automatically with user being root or passwordless sudoer.
+sudo apt -y update
+sudo apt -y upgrade
 sudo apt -y install sshpass
 mkdir -p ~/.ssh
 touch ~/.ssh/known_hosts
