@@ -1,7 +1,9 @@
 managerialAccount=$USER
 registrationBoolean=$1
 
-sed -i "741s/.*/enable_registration : "$registrationBoolean"/" /home/"$managerialAccount"/homeserver.yaml
-source ~/synapse/env/bin/activate
-synctl restart
+sed -i "741s/.*/enable_registration : "$registrationBoolean"/" /home/"$managerialAccount"/synapse/homeserver.yaml
+cd ~/synapse
+source env/bin/activate
+synctl stop
+synctl start
 deactivate
